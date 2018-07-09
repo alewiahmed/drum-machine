@@ -52,6 +52,11 @@
 
 .drum-pad:active {
   top: 2px;
+  box-shadow: 3px 3px 4px 0px #000000d6;
+}
+
+.drum-pad.power:active {
+  top: 2px;
   background-color: #ffc107;
   box-shadow: 3px 3px 4px 0px #000000d6;
 }

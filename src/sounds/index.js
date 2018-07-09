@@ -1,6 +1,6 @@
 import clap from './Clap.mp3';
 import kick from './Kick.mp3';
-import Snare from './Snare.mp3';
+import snare from './Snare.mp3';
 import shaker from './Shaker.mp3';
 import openHH from './Dsc_Ohh.mp3';
 import closedHH from './Cev_HH.mp3';
@@ -20,7 +20,7 @@ import punchyKick from './punchy_kick.mp3';
 export default {
   clap,
   kick,
-  Snare,
+  snare,
   openHH,
   shaker,
   chordOne,

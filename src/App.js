@@ -123,55 +123,58 @@ class App extends Component {
     super(props);
     this.state = {
       kitType: 0,
-      bank: false,
       power: false,
       volumeLevel: 50,
       currentPad: null
     };
-    this.audios = [];
   }
 
   showDrumPads = () => {
-    let { kitType } = this.state;
+    let { kitType, power } = this.state;
     let sounds = kitType === 0 ? soundsOne : soundsTwo;
+    let drumClass = power ? 'drum-pad power' : 'drum-pad';
     return sounds.map((sound, index) => {
       return (
         <div
           key={index}
           id={sound.id}
-          className="drum-pad"
+          className={drumClass}
           onClick={() => this.playSound(index)}
         >
           {sound.key}
-          <audio className="clip" id={sound.key}>
-            <source src={sound.src} type="audio/mpeg" />
-          </audio>
+          <audio className="clip" id={sound.key} src={sound.src} />
         </div>
       );
     });
   };
 
   togglePower = () => {
-    this.setState(state => {
-      state.power = !state.power;
-      return state;
-    });
+    this.setState(
+      state => {
+        state.power = !state.power;
+        return state;
+      },
+      () => {
+        if (!this.state.power) this.clearDisplay();
+      }
+    );
   };
 
-  toggleBank = () => {
+  toggleKitType = () => {
     this.setState(state => {
-      state.bank = !state.bank;
+      state.kitType = state.kitType === 0 ? 1 : 0;
       return state;
     });
   };
 
   display = () => {
     let { currentPad } = this.state;
-    return currentPad === null ? '' : currentPad;
+    return currentPad === null ? String.fromCharCode(160) : currentPad;
   };
 
   playSound = index => {
-    let { kitType } = this.state;
+    let { kitType, power } = this.state;
+    if (!power) return;
     let sounds = kitType === 0 ? soundsOne : soundsTwo;
     this.setState(state => {
       state.currentPad = sounds[index].name;
@@ -185,6 +188,12 @@ class App extends Component {
   handleSlider = e => {
     this.setState({
       volumeLevel: e.target.value
+    });
+  };
+
+  clearDisplay = () => {
+    this.setState({
+      currentPad: null
     });
   };
 
@@ -209,13 +218,13 @@ class App extends Component {
                 type="range"
                 className="range"
                 value={volumeLevel}
-                onInput={this.handleSlider}
+                onChange={this.handleSlider}
               />
             </div>
             <SwitchButton
               text="BANK"
-              on={this.state.bank}
-              onClick={this.toggleBank}
+              onClick={this.toggleKitType}
+              on={this.state.kitType === 1}
             />
           </div>
         </div>
