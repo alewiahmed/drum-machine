@@ -123,6 +123,8 @@ class App extends Component {
     super(props);
     this.state = {
       kitType: 0,
+      bank: false,
+      power: false,
       currentPad: null
     };
     this.audios = [];
@@ -137,7 +139,7 @@ class App extends Component {
           key={index}
           id={sound.id}
           className="drum-pad"
-          onClick={() => this.playSound(sound.key)}
+          onClick={() => this.playSound(index)}
         >
           {sound.key}
           <audio className="clip" id={sound.key}>
@@ -148,13 +150,33 @@ class App extends Component {
     });
   };
 
+  togglePower = () => {
+    this.setState(state => {
+      state.power = !state.power;
+      return state;
+    });
+  };
+
+  toggleBank = () => {
+    this.setState(state => {
+      state.bank = !state.bank;
+      return state;
+    });
+  };
+
   display = () => {
     let { currentPad } = this.state;
     return currentPad === null ? '' : currentPad;
   };
 
-  playSound = id => {
-    let audio = document.getElementById(id);
+  playSound = index => {
+    let { kitType } = this.state;
+    let sounds = kitType === 0 ? soundsOne : soundsTwo;
+    this.setState(state => {
+      state.currentPad = sounds[index].name;
+      return state;
+    });
+    let audio = document.getElementById(sounds[index].key);
     audio.currentTime = 0;
     audio.play();
   };
@@ -165,15 +187,36 @@ class App extends Component {
         <div id="drum-machine">
           <div className="drum-container">{this.showDrumPads()}</div>
           <div className="controllers">
-            <div>Power</div>
+            <SwitchButton
+              on={this.state.power}
+              text="POWER"
+              onClick={this.togglePower}
+            />
             <p id="display">{this.display()}</p>
             <div>Volume</div>
-            <div>Bank</div>
+            <SwitchButton
+              on={this.state.bank}
+              text="BANK"
+              onClick={this.toggleBank}
+            />
           </div>
         </div>
       </div>
     );
   }
 }
+
+const SwitchButton = props => {
+  let { onClick, on, text } = props;
+  let switchClass = on === true ? 'switch on' : 'switch';
+  return (
+    <div className="switch-container row">
+      <div className="switch-text">{text}</div>
+      <div className={switchClass} onClick={onClick}>
+        <div className="switch-button" />
+      </div>
+    </div>
+  );
+};
 
 export default App;
