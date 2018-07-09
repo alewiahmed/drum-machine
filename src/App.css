@@ -7,6 +7,13 @@
   justify-content: center;
 }
 
+.drum-container {
+  width: 300px;
+  color: #091f29;
+  min-width: 300px;
+  font-weight: bold;
+}
+
 #drum-machine {
   display: flex;
   padding: 20px;
@@ -15,8 +22,7 @@
   border-radius: 7px;
   align-items: center;
   justify-content: center;
-  border: 4px solid gold;
-  background-color: #dfdddd;
+  background-color: #ffc107;
   box-shadow: 5px 5px 10px 4px #00000082;
 }
 
@@ -30,12 +36,6 @@
   font-weight: bold;
 }
 
-.drum-container {
-  width: 300px;
-  min-width: 300px;
-  font-weight: bold;
-}
-
 .drum-pad {
   width: 85px;
   margin: 5px;
@@ -46,7 +46,7 @@
   align-items: center;
   display: inline-flex;
   justify-content: center;
-  background-color: #979797;
+  background-color: #673ab7;
   box-shadow: 4px 4px 4px 0px #000000d6;
 }
 
@@ -57,7 +57,7 @@
 
 .drum-pad.power:active {
   top: 2px;
-  background-color: #ffc107;
+  background-color: #2196f3;
   box-shadow: 3px 3px 4px 0px #000000d6;
 }
 
@@ -65,7 +65,7 @@
   width: 150px;
   margin: 15px;
   padding: 15px;
-  background-color: #979797;
+  background-color: #673ab7;
 }
 
 .switch-container {
@@ -79,6 +79,7 @@
 
 .switch-text {
   font-size: 15px;
+  color: #091f29;
   font-weight: bold;
   margin-bottom: 3px;
   font-stretch: condensed;
@@ -101,7 +102,7 @@
   width: 45%;
   height: 100%;
   border-radius: 2px;
-  background-color: #2196f3;
+  background-color: #8f50ff;
 }
 
 .switch.on {
@@ -120,7 +121,7 @@
   height: 10px;
   outline: none;
   border-radius: 5px;
-  background: #979797;
+  background: #673ab7;
   -webkit-appearance: none;
 }
 .range::-webkit-slider-thumb {
@@ -128,12 +129,12 @@
   height: 20px;
   cursor: pointer;
   border-radius: 50%;
-  background: #2196f3;
+  background: darkblue;
   -webkit-appearance: none;
   transition: background 0.15s ease-in-out;
 }
 .range::-webkit-slider-thumb:hover {
-  background: #ffc107;
+  background: #00005f;
 }
 .range::-moz-range-thumb {
   border: 0;
@@ -145,21 +146,21 @@
   transition: background 0.15s ease-in-out;
 }
 .range::-moz-range-thumb:hover {
-  background: #ffc107;
+  background: #00005f;
 }
 .range:active::-moz-range-thumb {
-  background: #ffc107;
+  background: #00005f;
 }
 .range:active::-webkit-slider-thumb {
-  background: #ffc107;
+  background: #00005f;
 }
 .range:active::-webkit-slider-thumb {
-  box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ffc107;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px #00005f;
 }
 
 ::-moz-range-track {
   border: 0;
-  background: #979797;
+  background: #673ab7;
 }
 
 input::-moz-focus-inner,
