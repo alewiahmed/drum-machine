@@ -102,3 +102,62 @@
 .switch.on {
   justify-content: flex-end;
 }
+
+.range-slider {
+  width: 100%;
+  margin: 20px auto;
+}
+
+.range {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 10px;
+  outline: none;
+  border-radius: 5px;
+  background: #979797;
+  -webkit-appearance: none;
+}
+.range::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: #2196f3;
+  -webkit-appearance: none;
+  transition: background 0.15s ease-in-out;
+}
+.range::-webkit-slider-thumb:hover {
+  background: #ffc107;
+}
+.range::-moz-range-thumb {
+  border: 0;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  background: #2196f3;
+  transition: background 0.15s ease-in-out;
+}
+.range::-moz-range-thumb:hover {
+  background: #ffc107;
+}
+.range:active::-moz-range-thumb {
+  background: #ffc107;
+}
+.range:active::-webkit-slider-thumb {
+  background: #ffc107;
+}
+.range:active::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px #fff, 0 0 0 6px #ffc107;
+}
+
+::-moz-range-track {
+  border: 0;
+  background: #979797;
+}
+
+input::-moz-focus-inner,
+input::-moz-focus-outer {
+  border: 0;
+}

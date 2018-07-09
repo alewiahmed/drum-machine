@@ -125,6 +125,7 @@ class App extends Component {
       kitType: 0,
       bank: false,
       power: false,
+      volumeLevel: 50,
       currentPad: null
     };
     this.audios = [];
@@ -181,22 +182,39 @@ class App extends Component {
     audio.play();
   };
 
+  handleSlider = e => {
+    this.setState({
+      volumeLevel: e.target.value
+    });
+  };
+
   render() {
+    let { volumeLevel } = this.state;
     return (
       <div className="App">
         <div id="drum-machine">
           <div className="drum-container">{this.showDrumPads()}</div>
           <div className="controllers">
             <SwitchButton
-              on={this.state.power}
               text="POWER"
+              on={this.state.power}
               onClick={this.togglePower}
             />
             <p id="display">{this.display()}</p>
-            <div>Volume</div>
+            <div className="range-slider">
+              <input
+                min="0"
+                step="1"
+                max="100"
+                type="range"
+                className="range"
+                value={volumeLevel}
+                onInput={this.handleSlider}
+              />
+            </div>
             <SwitchButton
-              on={this.state.bank}
               text="BANK"
+              on={this.state.bank}
               onClick={this.toggleBank}
             />
           </div>
