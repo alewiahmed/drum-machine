@@ -149,24 +149,19 @@ class App extends Component {
 
   componentDidMount() {
     this.changeVolume();
-    document.addEventListener('keydown', this.handleKeyPress);
   }
 
   showDrumPads = () => {
     let { kitType, power } = this.state;
     let sounds = kitType === 0 ? soundsOne : soundsTwo;
-    let drumClass = power ? 'drum-pad power' : 'drum-pad';
     let audioDOMs = sounds.map((sound, index) => {
       return (
-        <div
+        <Pad
           key={index}
-          id={sound.id}
-          className={drumClass}
-          onClick={() => this.playSound(index)}
-        >
-          {sound.key}
-          <audio className="clip" id={sound.key} src={sound.src} />
-        </div>
+          sound={sound}
+          power={power}
+          onClick={this.changeDisplay}
+        />
       );
     });
     return <div className="drum-container">{audioDOMs}</div>;
@@ -200,29 +195,10 @@ class App extends Component {
     return display === null ? String.fromCharCode(160) : display;
   };
 
-  playSound = index => {
-    let { kitType, power } = this.state;
-    if (!power) return;
-    let sounds = kitType === 0 ? soundsOne : soundsTwo;
-    this.setState(state => {
-      state.display = sounds[index].name;
-      return state;
+  changeDisplay = sound => {
+    this.setState({
+      display: sound.name
     });
-    let audio = document.getElementById(sounds[index].key);
-    audio.currentTime = 0;
-    audio.play();
-  };
-
-  handleKeyPress = e => {
-    let { power } = this.state;
-    if (!power) return;
-    let index;
-    soundsOne.some((sound, i) => {
-      if (sound.keyCode === e.keyCode) index = i;
-      return sound.keyCode === e.keyCode;
-    });
-    if (index === undefined) return;
-    this.playSound(index);
   };
 
   handleSlider = e => {
@@ -295,6 +271,80 @@ class App extends Component {
             />
           </div>
         </div>
+      </div>
+    );
+  }
+}
+
+class Pad extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      active: false
+    };
+  }
+  componentDidMount() {
+    document.addEventListener('keydown', this.handleKeyPress);
+  }
+
+  handleKeyPress = e => {
+    let { power, sound, onClick } = this.props;
+    if (e.keyCode === sound.keyCode) {
+      this.activate();
+      if (power) {
+        this.playSound();
+        onClick(sound);
+      }
+    }
+  };
+
+  playSound = () => {
+    this.audio.currentTime = 0;
+    this.audio.play();
+  };
+
+  activate = () => {
+    this.setState(
+      {
+        active: true
+      },
+      () => {
+        setTimeout(() => {
+          this.setState({
+            active: false
+          });
+        }, 150);
+      }
+    );
+  };
+
+  render() {
+    let { sound, power, onClick } = this.props;
+    let { active } = this.state;
+    let drumClass =
+      power && active
+        ? 'drum-pad power active'
+        : active
+          ? 'drum-pad active'
+          : 'drum-pad';
+    return (
+      <div
+        id={sound.id}
+        className={drumClass}
+        onClick={() => {
+          this.activate();
+          if (!power) return;
+          this.playSound();
+          onClick(sound);
+        }}
+      >
+        {sound.key}
+        <audio
+          id={sound.key}
+          src={sound.src}
+          className="clip"
+          ref={ref => (this.audio = ref)}
+        />
       </div>
     );
   }
