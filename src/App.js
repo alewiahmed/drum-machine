@@ -123,7 +123,7 @@ class App extends Component {
     super(props);
     this.state = {
       kitType: 0,
-      power: false,
+      power: true,
       display: null,
       volumeLevel: 0.35
     };
