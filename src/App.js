@@ -124,9 +124,13 @@ class App extends Component {
     this.state = {
       kitType: 0,
       power: false,
-      volumeLevel: 50,
+      volumeLevel: 0.35,
       currentPad: null
     };
+  }
+
+  componentDidMount() {
+    this.changeVolume();
   }
 
   showDrumPads = () => {
@@ -186,8 +190,18 @@ class App extends Component {
   };
 
   handleSlider = e => {
-    this.setState({
-      volumeLevel: e.target.value
+    this.setState(
+      {
+        volumeLevel: e.target.value
+      },
+      this.changeVolume
+    );
+  };
+
+  changeVolume = () => {
+    soundsOne.forEach(sound => {
+      let audiosDOM = document.getElementById(sound.key);
+      audiosDOM.volume = this.state.volumeLevel;
     });
   };
 
@@ -213,8 +227,8 @@ class App extends Component {
             <div className="range-slider">
               <input
                 min="0"
-                step="1"
-                max="100"
+                max="1"
+                step="0.01"
                 type="range"
                 className="range"
                 value={volumeLevel}
