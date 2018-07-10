@@ -124,8 +124,8 @@ class App extends Component {
     this.state = {
       kitType: 0,
       power: false,
-      volumeLevel: 0.35,
-      currentPad: null
+      display: null,
+      volumeLevel: 0.35
     };
   }
 
@@ -167,13 +167,14 @@ class App extends Component {
   toggleKitType = () => {
     this.setState(state => {
       state.kitType = state.kitType === 0 ? 1 : 0;
+      state.display = state.kitType === 0 ? 'Heater Kit' : 'Smooth Piano Kit';
       return state;
     });
   };
 
   display = () => {
-    let { currentPad } = this.state;
-    return currentPad === null ? String.fromCharCode(160) : currentPad;
+    let { display } = this.state;
+    return display === null ? String.fromCharCode(160) : display;
   };
 
   playSound = index => {
@@ -181,7 +182,7 @@ class App extends Component {
     if (!power) return;
     let sounds = kitType === 0 ? soundsOne : soundsTwo;
     this.setState(state => {
-      state.currentPad = sounds[index].name;
+      state.display = sounds[index].name;
       return state;
     });
     let audio = document.getElementById(sounds[index].key);
@@ -207,7 +208,7 @@ class App extends Component {
 
   clearDisplay = () => {
     this.setState({
-      currentPad: null
+      display: null
     });
   };
 
