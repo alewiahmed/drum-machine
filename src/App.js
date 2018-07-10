@@ -137,7 +137,7 @@ class App extends Component {
     let { kitType, power } = this.state;
     let sounds = kitType === 0 ? soundsOne : soundsTwo;
     let drumClass = power ? 'drum-pad power' : 'drum-pad';
-    return sounds.map((sound, index) => {
+    let audioDOMs = sounds.map((sound, index) => {
       return (
         <div
           key={index}
@@ -150,6 +150,7 @@ class App extends Component {
         </div>
       );
     });
+    return <div className="drum-container">{audioDOMs}</div>;
   };
 
   togglePower = () => {
@@ -205,8 +206,8 @@ class App extends Component {
 
   changeVolume = () => {
     soundsOne.forEach(sound => {
-      let audiosDOM = document.getElementById(sound.key);
-      audiosDOM.volume = this.state.volumeLevel;
+      let audioDOMs = document.getElementById(sound.key);
+      audioDOMs.volume = this.state.volumeLevel;
     });
   };
 
@@ -239,7 +240,7 @@ class App extends Component {
     return (
       <div className="App">
         <div id="drum-machine">
-          <div className="drum-container">{this.showDrumPads()}</div>
+          {this.showDrumPads()}
           <div className="controllers">
             <SwitchButton on={power} text="POWER" onClick={this.togglePower} />
             <p id="display">{this.display()}</p>
