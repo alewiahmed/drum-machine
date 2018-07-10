@@ -6,63 +6,54 @@ import allSounds from './sounds';
 
 const soundsOne = [
   {
-    key: 'Q',
     keyCode: 81,
     id: 'heater-1',
     name: 'Heater 1',
     src: allSounds.heaterOne
   },
   {
-    key: 'W',
     keyCode: 87,
     id: 'heater-2',
     name: 'Heater 2',
     src: allSounds.heaterTwo
   },
   {
-    key: 'E',
     keyCode: 69,
     id: 'heater-3',
     name: 'Heater 3',
     src: allSounds.heaterThree
   },
   {
-    key: 'A',
     keyCode: 65,
     id: 'heater-4',
     name: 'Heater 4',
     src: allSounds.heaterFour
   },
   {
-    key: 'S',
     id: 'clap',
     keyCode: 83,
     name: 'Clap',
     src: allSounds.clap
   },
   {
-    key: 'D',
     keyCode: 68,
     id: 'open-hh',
     name: 'Open HH',
     src: allSounds.openHH
   },
   {
-    key: 'Z',
     keyCode: 90,
     id: 'kick-n-hat',
     name: `kick n'Hat`,
     src: allSounds.kickNHat
   },
   {
-    key: 'X',
     id: 'kick',
     keyCode: 88,
     name: 'Kick',
     src: allSounds.kick
   },
   {
-    key: 'C',
     keyCode: 67,
     id: 'closed-hh',
     name: 'Closed HH',
@@ -72,63 +63,54 @@ const soundsOne = [
 
 const soundsTwo = [
   {
-    key: 'Q',
     keyCode: 81,
     id: 'chord-1',
     name: 'Chord 1',
     src: allSounds.chordOne
   },
   {
-    key: 'W',
     keyCode: 87,
     id: 'chord-2',
     name: 'Chord 2',
     src: allSounds.chordTwo
   },
   {
-    key: 'E',
     keyCode: 69,
     id: 'chord-3',
     name: 'Chord 3',
     src: allSounds.chordThree
   },
   {
-    key: 'A',
     keyCode: 65,
     id: 'shaker',
     name: 'Shaker',
     src: allSounds.shaker
   },
   {
-    key: 'S',
     keyCode: 83,
     id: 'open-hh',
     name: 'Open HH',
     src: allSounds.dryOpenHH
   },
   {
-    key: 'D',
     keyCode: 68,
     id: 'closed-hh',
     name: 'Closed HH',
     src: allSounds.dryClosedHH
   },
   {
-    key: 'Z',
     keyCode: 90,
     id: 'punchy-kick',
     name: 'Punchy Kick',
     src: allSounds.punchyKick
   },
   {
-    key: 'X',
     keyCode: 88,
     id: 'side-stick',
     name: 'Side Stick',
     src: allSounds.sideStick
   },
   {
-    key: 'C',
     keyCode: 67,
     id: 'snare',
     name: 'Snare',
@@ -221,7 +203,9 @@ class App extends Component {
 
   changeVolume = () => {
     soundsOne.forEach(sound => {
-      let audioDOMs = document.getElementById(sound.key);
+      let audioDOMs = document.getElementById(
+        String.fromCharCode(sound.keyCode)
+      );
       audioDOMs.volume = this.state.volumeLevel;
     });
   };
@@ -321,6 +305,7 @@ class Pad extends Component {
   render() {
     let { sound, power, onClick } = this.props;
     let { active } = this.state;
+    let key = String.fromCharCode(sound.keyCode);
     let drumClass =
       power && active
         ? 'drum-pad power active'
@@ -338,9 +323,9 @@ class Pad extends Component {
           onClick(sound);
         }}
       >
-        {sound.key}
+        {key}
         <audio
-          id={sound.key}
+          id={key}
           src={sound.src}
           className="clip"
           ref={ref => (this.audio = ref)}
