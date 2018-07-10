@@ -133,7 +133,7 @@
   -webkit-appearance: none;
   transition: background 0.15s ease-in-out;
 }
-.range::-webkit-slider-thumb:hover {
+.range.power::-webkit-slider-thumb:hover {
   background: #00005f;
 }
 .range::-moz-range-thumb {

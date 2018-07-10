@@ -168,6 +168,7 @@ class App extends Component {
   toggleKitType = () => {
     let { power } = this.state;
     if (!power) return;
+    this.clearTimeoutObj();
     this.setState(state => {
       state.kitType = state.kitType === 0 ? 1 : 0;
       state.display = state.kitType === 0 ? 'Heater Kit' : 'Smooth Piano Kit';
@@ -196,11 +197,18 @@ class App extends Component {
   handleSlider = e => {
     let { power } = this.state;
     if (!power) return;
+    this.clearTimeoutObj();
     this.setState(
       {
-        volumeLevel: e.target.value
+        volumeLevel: e.target.value,
+        display: `Volume: ${Math.round(e.target.value * 100)}`
       },
-      this.changeVolume
+      () => {
+        this.changeVolume();
+        this.timeout = setTimeout(() => {
+          this.clearDisplay();
+        }, 1400);
+      }
     );
   };
 
@@ -215,6 +223,10 @@ class App extends Component {
     this.setState({
       display: null
     });
+  };
+
+  clearTimeoutObj = () => {
+    if (this.timeout) clearTimeout(this.timeout);
   };
 
   showRangeSlider = () => {
