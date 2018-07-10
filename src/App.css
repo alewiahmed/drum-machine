@@ -145,16 +145,16 @@
   background: #2196f3;
   transition: background 0.15s ease-in-out;
 }
-.range::-moz-range-thumb:hover {
+.range.power::-moz-range-thumb:hover {
   background: #00005f;
 }
-.range:active::-moz-range-thumb {
+.range.power:active::-moz-range-thumb {
   background: #00005f;
 }
-.range:active::-webkit-slider-thumb {
+.range.power:active::-webkit-slider-thumb {
   background: #00005f;
 }
-.range:active::-webkit-slider-thumb {
+.range.power:active::-webkit-slider-thumb {
   box-shadow: 0 0 0 3px #fff, 0 0 0 6px #00005f;
 }
 

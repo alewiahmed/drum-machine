@@ -165,6 +165,8 @@ class App extends Component {
   };
 
   toggleKitType = () => {
+    let { power } = this.state;
+    if (!power) return;
     this.setState(state => {
       state.kitType = state.kitType === 0 ? 1 : 0;
       state.display = state.kitType === 0 ? 'Heater Kit' : 'Smooth Piano Kit';
@@ -191,6 +193,8 @@ class App extends Component {
   };
 
   handleSlider = e => {
+    let { power } = this.state;
+    if (!power) return;
     this.setState(
       {
         volumeLevel: e.target.value
@@ -212,34 +216,38 @@ class App extends Component {
     });
   };
 
+  showRangeSlider = () => {
+    let { volumeLevel, power } = this.state;
+    let rangeClass = power ? 'range power' : 'range';
+    return (
+      <div className="range-slider">
+        <input
+          min="0"
+          max="1"
+          step="0.01"
+          type="range"
+          value={volumeLevel}
+          className={rangeClass}
+          onChange={this.handleSlider}
+        />
+      </div>
+    );
+  };
+
   render() {
-    let { volumeLevel } = this.state;
+    let { power, kitType } = this.state;
     return (
       <div className="App">
         <div id="drum-machine">
           <div className="drum-container">{this.showDrumPads()}</div>
           <div className="controllers">
-            <SwitchButton
-              text="POWER"
-              on={this.state.power}
-              onClick={this.togglePower}
-            />
+            <SwitchButton on={power} text="POWER" onClick={this.togglePower} />
             <p id="display">{this.display()}</p>
-            <div className="range-slider">
-              <input
-                min="0"
-                max="1"
-                step="0.01"
-                type="range"
-                className="range"
-                value={volumeLevel}
-                onChange={this.handleSlider}
-              />
-            </div>
+            {this.showRangeSlider()}
             <SwitchButton
               text="BANK"
+              on={kitType === 1}
               onClick={this.toggleKitType}
-              on={this.state.kitType === 1}
             />
           </div>
         </div>
